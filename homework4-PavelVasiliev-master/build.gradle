@@ -1,0 +1,76 @@
+plugins {
+    id "java"
+    id "idea"
+    id "org.springframework.boot" version "2.5.6"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
+ext {
+    jsoupVersion = "1.14.3"
+    openApiVersion = "1.5.13"
+    jetbrainsAnnotationVersion = "23.0.0"
+    postgresContainerVersion = "1.16.0"
+    wireMockVersion = "2.32.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.boot:spring-boot-starter-data-r2dbc"
+
+    implementation "org.springdoc:springdoc-openapi-webflux-core:$openApiVersion"
+    implementation "org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion"
+
+    implementation "javax.xml.bind:jaxb-api"
+    implementation "org.glassfish.jaxb:jaxb-runtime"
+    implementation "org.jsoup:jsoup:$jsoupVersion"
+    implementation "org.apache.commons:commons-lang3"
+    implementation "org.jetbrains:annotations:$jetbrainsAnnotationVersion"
+
+    implementation "io.r2dbc:r2dbc-postgresql"
+    implementation "org.flywaydb:flyway-core"
+    implementation 'org.projectlombok:lombok:1.18.20'
+    runtimeOnly "org.postgresql:postgresql"
+    runtimeOnly "org.springframework.boot:spring-boot-starter-jdbc"
+
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.testcontainers:postgresql:$postgresContainerVersion"
+    testImplementation "com.github.tomakehurst:wiremock-jre8:$wireMockVersion"
+    testImplementation "org.postgresql:postgresql"
+    testImplementation "org.springframework.boot:spring-boot-starter-jdbc"
+
+    def junitJupiterVersion = '5.4.2'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    testImplementation "org.testcontainers:testcontainers:1.16.2"
+    testImplementation "org.testcontainers:junit-jupiter:1.16.2"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+}

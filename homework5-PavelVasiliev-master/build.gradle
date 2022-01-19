@@ -1,0 +1,53 @@
+plugins {
+    id "java"
+    id "idea"
+    id "org.springframework.boot" version "2.6.1"
+    id "io.spring.dependency-management" version "1.0.11.RELEASE"
+}
+
+ext {
+    jetbrainsAnnotationsVersion = "22.0.0"
+    testContainersVersion = "1.16.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.springframework.kafka:spring-kafka"
+    implementation "org.apache.kafka:kafka-streams"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+
+    implementation "com.google.code.gson:gson"
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+    implementation "org.jetbrains:annotations:$jetbrainsAnnotationsVersion"
+
+    implementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.kafka:spring-kafka-test"
+    testImplementation "org.apache.kafka:kafka-streams-test-utils"
+    testImplementation "org.testcontainers:kafka:$testContainersVersion"
+    testImplementation "org.testcontainers:junit-jupiter:$testContainersVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+bootJar {
+    archiveFileName = "${project.name}.jar"
+}

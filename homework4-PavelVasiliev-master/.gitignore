@@ -1,0 +1,11 @@
+*.iml
+.DS_Store/
+.idea/
+.gradle/
+out/
+bin/
+build/
+/src/main/java/ru/innotech/education/rxjava/contr/DefController.java
+/.github/classroom/autograding.json
+/.github/workflows/
+/.github/workflows/classroom.yml
